@@ -5,7 +5,7 @@
 
 
 ## Ejercicio 8
-A continuación la creación de los triggers que modifican la tabla "auditorías" cada vez que se hace CRUD en la tabla clientes:
+#### A continuación la creación de los triggers que modifican la tabla "auditorías" cada vez que se hace CRUD en la tabla clientes:
 ![Insert](https://raw.githubusercontent.com/Marianoromero8/BaseDeDatosII/refs/heads/main/Trabajo%20Practico%201/Ejercicio8-A.png)
 ![Eliminar](https://raw.githubusercontent.com/Marianoromero8/BaseDeDatosII/refs/heads/main/Trabajo%20Practico%201/Ejercicio8-B.png)
 ![Actualizar](https://raw.githubusercontent.com/Marianoromero8/BaseDeDatosII/refs/heads/main/Trabajo%20Practico%201/Ejercicio8-C.png)
