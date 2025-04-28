@@ -1,0 +1,1 @@
+GRANT SELECT ON punto6y7.ventas TO 'analista' @'localhost';
