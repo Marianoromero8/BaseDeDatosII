@@ -17,7 +17,7 @@ Primero creo al usuario con su contraseña desde el servidor donde me encuentro 
 Luego le doy el permiso para poder ver los productos, por lo tanto no va a poder editar, insertar o borrar de la tabla
 ![Le doy permiso solo para ver](https://github.com/user-attachments/assets/1cfc8ce8-fd6f-4e3a-9118-0b05dfc71232)
 
-En la siguiente foto se ve como desde el usuario analista intento insertar datos y me lo niega
+En la siguiente foto se ve como desde el usuario analista intento insertar datos y me lo niega. Previamente si pudo ver 5 productos ya que ese permiso lo tiene.
 ![Intento de insertar data](https://github.com/user-attachments/assets/db842568-60c3-4731-82bb-93ac1cf85a0a)
 
 
