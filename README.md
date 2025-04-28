@@ -3,6 +3,23 @@
 ## Ejercicio 1.
 
 
+## Ejercicio 6.
+Primero creo la vista que resuma las ventas mensuales
+![Creacion Vista](https://github.com/user-attachments/assets/2ec76833-79f8-4f41-a0e8-55d56bfbf72a)
+
+Luego pido los 5 productos mas vendidos a traves de un llamado agrupandolos y limitandolo a 5.
+![Devuelve Productos Mas Vendidos](https://github.com/user-attachments/assets/40a4ebf4-2a76-4546-a9ee-db9e09f8cebe)
+
+## Ejercicio 7.
+Primero creo al usuario con su contraseña desde el servidor donde me encuentro que es el local
+![Creo usuario analista + contraseña](https://github.com/user-attachments/assets/70ad48fe-7c84-474d-9c64-1fe833fb587d)
+
+Luego le doy el permiso para poder ver los productos, por lo tanto no va a poder editar, insertar o borrar de la tabla
+![Le doy permiso solo para ver](https://github.com/user-attachments/assets/1cfc8ce8-fd6f-4e3a-9118-0b05dfc71232)
+
+En la siguiente foto se ve como desde el usuario analista intento insertar datos y me lo niega
+![Intento de insertar data](https://github.com/user-attachments/assets/db842568-60c3-4731-82bb-93ac1cf85a0a)
+
 
 ## Ejercicio 8
 #### A continuación la creación de los triggers que modifican la tabla "auditorías" cada vez que se hace CRUD en la tabla clientes:
