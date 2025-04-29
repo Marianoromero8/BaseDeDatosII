@@ -1,4 +1,4 @@
-# Trabajo Practico 1 base de datos
+# Trabajo Practico 1 Base De Datos II
 
 ## Ejercicio 1.
 **Código al intentar borrar alumno con id=2 y su respectivo error**
