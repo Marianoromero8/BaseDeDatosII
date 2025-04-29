@@ -20,6 +20,16 @@ INSERT INTO MatriculasEstudiantes (ID_MATRICULA, Asignatura, id_alumno) VALUES (
 Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (bd2tp1.matriculasestudiantes)
 ```
 
+## Ejercicio3.
+### ReadCommitted
+En el Read Committed cada SELECT ve solo datos que ya fueron confirmados por otras transacciones, osea por ejemplo dos usuarios pueden ver el mismo valor antes de modificarlo y el ultimo en hacer el COMMIT sobreescribe el cambio del otro sin darse cuenta
+
+
+### Serializable
+El serializable es mas estricto porque bloquea cualquier operacion que pueda causar inconsistencia, osea  Si un usuario lee y esta modificando una fila , otro usuario B que quiere modificar esa fila debe esperar a que A termine  antes de acceder a esa misma fila.
+
+
+
 ## Ejercicio 6.
 Primero creo la vista que resuma las ventas mensuales
 ![Creacion Vista](https://github.com/user-attachments/assets/2ec76833-79f8-4f41-a0e8-55d56bfbf72a)
