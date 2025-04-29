@@ -1,7 +1,24 @@
-# Trabajo Practico 1 base de datos
+# Trabajo Practico 1 Base De Datos II
 
 ## Ejercicio 1.
+**Código al intentar borrar alumno con id=2 y su respectivo error**
 
+```sql
+DELETE FROM Alumnos WHERE ID_ALUMNO = 2;
+
+Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (bd2tp1.matriculas, CONSTRAINT matriculas_ibfk_1 FOREIGN KEY (id_alumno) REFERENCES alumnos (ID_ALUMNO) ON DELETE RESTRICT)
+0.000 sec
+```
+
+## Ejercicio 2.
+
+**Código al intentar insertar un dato inválido y su respectivo error**
+
+```sql
+INSERT INTO MatriculasEstudiantes (ID_MATRICULA, Asignatura, id_alumno) VALUES (1, 'Matemáticas', 999);
+
+Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (bd2tp1.matriculasestudiantes)
+```
 
 ## Ejercicio 6.
 Primero creo la vista que resuma las ventas mensuales
