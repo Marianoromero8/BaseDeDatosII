@@ -26,3 +26,15 @@ Por ultimo eliminamos al empleado que tiene el puesto `Pasante` - ```db.empleado
 
 Realizo una consulta que me traiga todos los empleados con la edad entre 25 y 40 años. ```db.empleados.find({$and: [{edad: { $gte: 25 }}, {edad: { $lte: 40 } } ] } )```
 ![alt text](busquedaOperadores.jpeg)
+
+
+## Ejercicio 5
+
+Se crea la tabla ventas, y luego se con $group y $sum se calcula la cantidad de ventas por productos
+![alt text](Punto5TP2.png)
+
+
+
+## Ejercicio 6
+Creamos la tabla clientes y creamos un indice ascendente para los campos "nombre" y "apellido
+![alt text](Punto6TP2.png)
