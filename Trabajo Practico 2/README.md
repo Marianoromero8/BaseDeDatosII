@@ -42,8 +42,6 @@ Se crea la tabla ventas, y luego se con $group y $sum se calcula la cantidad de 
 
 ![alt text](Punto5TP2.png)
 
-
-
 ## Ejercicio 6
 
 Creamos la tabla clientes y creamos un indice ascendente para los campos "nombre" y "apellido
