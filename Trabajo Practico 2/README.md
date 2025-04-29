@@ -1,4 +1,4 @@
-# Trabajo Practico 2 Base De Datos II
+# Trabajo Practico 2 - Base De Datos II
 
 ## Ejercicio 1.
 
