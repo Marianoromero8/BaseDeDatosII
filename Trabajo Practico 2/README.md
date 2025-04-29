@@ -16,11 +16,10 @@ Luego nos pide actualizar la edad de uno de los empleados ```db.empleados.update
 
 ![alt text](updateEmpleado.jpeg)
 
+
 Por ultimo eliminamos al empleado que tiene el puesto `Pasante` - ```db.empleados.deleteOne({puesto: "Pasante"})```
 
 ![alt text](deleteEmpleado.jpeg)
-
-
 
 ## Ejercicio 2.
 
