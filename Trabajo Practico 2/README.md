@@ -45,6 +45,7 @@ Creamos la coleccion cursos y alumnos y luego obtenemos los id de los cursos par
 
 ## Ejercicio 8
 Usando &lookup hacemos una agregacion donde cada alumno tiene un array con los cursos inscriptos
+![alt text](punto8tp2.png)
 
 ## Ejercicio 9
 
