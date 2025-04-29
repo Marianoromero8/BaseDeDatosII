@@ -82,5 +82,5 @@ mysqldump -u root -p Negocio > backup.sql
 DROP DATABASE Negocio;
 
 // Ahora Restauramos la base de datos perdida
-mysql -u root -p Negocio < backup_simulacion.sql
+mysql -u root -p Negocio < backup.sql
 ```
