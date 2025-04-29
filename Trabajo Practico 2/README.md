@@ -39,6 +39,13 @@ Se crea la tabla ventas, y luego se con $group y $sum se calcula la cantidad de 
 Creamos la tabla clientes y creamos un indice ascendente para los campos "nombre" y "apellido
 ![alt text](Punto6TP2.png)
 
+## Ejercicio 7
+Creamos la coleccion cursos y alumnos y luego obtenemos los id de los cursos para insertalos como lista a los alumnos
+![alt text](punto7tp2.png)
+
+## Ejercicio 8
+Usando &lookup hacemos una agregacion donde cada alumno tiene un array con los cursos inscriptos
+
 ## Ejercicio 9
 
 ### Replica Set
