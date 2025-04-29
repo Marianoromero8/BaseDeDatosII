@@ -88,8 +88,8 @@ Sharding es una técnica para dividir grandes cantidades de datos en fragmentos 
 Muestra todos los usuarios de la base de datos actual
 ### Backup de una base de datos
 #### Paso 1: Usar mongodump
-```mongodump –db.empresa --out /ruta a la carpeta donde poner el backup```
+```mongodump –db.empresa --out "/ruta a la carpeta donde poner el backup"```
 
 ### Restauracion de una base de datos
 #### Paso 1: Usar mongorestore
-```mongorestore --db empresa /ruta a la carpeta con el backup```
+```mongorestore --db empresa "/ruta a la carpeta con el backup"```
