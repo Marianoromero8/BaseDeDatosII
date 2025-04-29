@@ -27,6 +27,15 @@ Por ultimo eliminamos al empleado que tiene el puesto `Pasante` - ```db.empleado
 Realizo una consulta que me traiga todos los empleados con la edad entre 25 y 40 años. ```db.empleados.find({$and: [{edad: { $gte: 25 }}, {edad: { $lte: 40 } } ] } )```
 ![alt text](busquedaOperadores.jpeg)
 
+## Ejercicio 3.
+
+Recupero los nombres y puestos de todos los empleados, sin mostrar el _id. ```db.empleados.find({},{ "_id": 0, "nombre": 1, "puesto": 1 })```
+![alt text](punto3.PNG)
+
+## Ejercicio 4.
+
+Agrego un campo direccion que incluya calle, ciudad y codigo_postal. ```db.empleados.updateMany({},{ $set: { direccion: { calle: "alem", ciudad: "Bahia Blanca", codigo_postal:"8000"}}})```
+![alt text](punto4.PNG)
 
 ## Ejercicio 5
 
