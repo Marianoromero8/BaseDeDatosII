@@ -74,10 +74,12 @@ Sharding es una técnica para dividir grandes cantidades de datos en fragmentos 
 #### Paso 1: Seleccionar la base de datos en la que se desee crear el usuario
 `use empresa`
 #### Paso 2: Crear el usuario con permisos de lectura y escritura usando role: "readWrite"
-```db.createUser({
-  user: "nombre_usuario",
-  pwd: "contraseña ",
-  roles: [
+
+```
+db.createUser({
+    user: "nombre_usuario",
+    pwd: "contraseña ",
+    roles: [
     { role: "readWrite", db: "empresa" }
   ]
 })
