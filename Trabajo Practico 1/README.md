@@ -20,6 +20,16 @@ INSERT INTO MatriculasEstudiantes (ID_MATRICULA, Asignatura, id_alumno) VALUES (
 Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (bd2tp1.matriculasestudiantes)
 ```
 
+## Ejercicio3.
+### ReadCommitted
+En el Read Committed cada SELECT ve solo datos que ya fueron confirmados por otras transacciones, osea por ejemplo dos usuarios pueden ver el mismo valor antes de modificarlo y el ultimo en hacer el COMMIT sobreescribe el cambio del otro sin darse cuenta
+
+
+### Serializable
+El serializable es mas estricto porque bloquea cualquier operacion que pueda causar inconsistencia, osea  Si un usuario lee y esta modificando una fila , otro usuario B que quiere modificar esa fila debe esperar a que A termine  antes de acceder a esa misma fila.
+
+
+
 ## Ejercicio 6.
 Primero creo la vista que resuma las ventas mensuales
 ![Creacion Vista](https://github.com/user-attachments/assets/2ec76833-79f8-4f41-a0e8-55d56bfbf72a)
@@ -45,3 +55,32 @@ En la siguiente foto se ve como desde el usuario analista intento insertar datos
 ![Actualizar](https://raw.githubusercontent.com/Marianoromero8/BaseDeDatosII/refs/heads/main/Trabajo%20Practico%201/Ejercicio8-C.png)
 #### Al ver la tabla 'Auditorías' con los valores id (autoincremental) accion y fecha, se observa como efectivamente, los triggers funcionan ante cada acción CRUD
 ![crud](https://raw.githubusercontent.com/Marianoromero8/BaseDeDatosII/refs/heads/main/Trabajo%20Practico%201/Ejercicio8-D.png)
+
+## Ejercicio 9
+
+```sql
+// Primero Creamos la base de datos
+CREATE DATABASE Negocio;
+
+// Ahora Creamos la tabla
+CREATE TABLE Clientes (
+    clienteid INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    edad INT
+);
+
+// Insertamos los datos
+INSERT INTO Clientes (nombre, edad) VALUES
+('dibu martinez', 35),
+('enzo ferandez', 23),
+('lionel messi' , 37);
+
+// Hacemos el backup
+mysqldump -u root -p Negocio > backup.sql
+
+// Simulamos la perdida de estos datos
+DROP DATABASE Negocio;
+
+// Ahora Restauramos la base de datos perdida
+mysql -u root -p Negocio < backup.sql
+```
