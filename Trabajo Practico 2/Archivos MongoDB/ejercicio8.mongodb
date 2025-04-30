@@ -1,0 +1,12 @@
+use("empresa")
+db.alumnos.aggregate([
+  {
+    $lookup: {
+      from: "cursos",
+      localField: "cursos",
+      foreignField: "_id",
+      as: "Cursos inscriptos"
+    }
+  }
+])
+

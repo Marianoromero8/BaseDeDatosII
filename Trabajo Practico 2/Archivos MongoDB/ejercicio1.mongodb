@@ -1,0 +1,30 @@
+use(`empresa`)
+db.empleados.insertMany([
+    {
+        nombre: "Mariano", 
+        edad: 27, 
+        puesto: "Pasante"
+    },
+    {
+        nombre: "Franco", 
+        edad: 28, 
+        puesto: "Gerente"
+    }, 
+    {
+        nombre: "Marcos", 
+        edad: 18, 
+        puesto: "Encargado"
+    }
+])
+
+// Actualiza la edad de Marcos a 19
+db.empleados.updateOne(
+    { nombre: "Marcos" },
+    { $set: { edad: 19 } }
+)
+// Elimina el empleado cuyo puesto sea "Pasante"
+db.empleados.deleteOne(
+    { puesto: "Pasante" }
+)
+// Verifica los cambios
+db.empleados.find()

@@ -1,0 +1,11 @@
+use("empresa")
+db.ventas.aggregate([
+    {
+      $group: {
+        _id: "$producto",       // Agrupar por producto
+        totalVentas: { 
+          $sum: "$cantidad",    // Sumar la cantidad vendida
+        }
+      }
+    }
+  ])

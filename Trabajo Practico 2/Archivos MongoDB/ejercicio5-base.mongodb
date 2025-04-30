@@ -1,0 +1,35 @@
+use("empresa")
+db.ventas.insertMany([
+    {
+      producto: "Laptop",
+      cantidad: 2,
+      precio_unitario: 1200
+    },
+    {
+      producto: "Mouse",
+      cantidad: 5,
+      precio_unitario: 25
+    },
+    {
+      producto: "Laptop",
+      cantidad: 1,
+      precio_unitario: 1200
+    },
+    {
+      producto: "Teclado",
+      cantidad: 3,
+      precio_unitario: 50
+    },
+    {
+      producto: "Monitor",
+      cantidad: 2,
+      precio_unitario: 300
+    },
+    {
+      producto: "Mouse",
+      cantidad: 10,
+      precio_unitario: 25
+    }
+  ])
+// para ver la base de datos
+//db.ventas.find()

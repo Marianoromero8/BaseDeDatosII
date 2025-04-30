@@ -1,0 +1,12 @@
+use("empresa")
+// crea el index
+db.clientes.createIndex({ nombre: 1, apellido: 1 })
+
+// Busca todos los clientes con apellido "Gómez"
+//db.clientes.find({ apellido: "García" })
+
+// Busca clientes con apellido y nombre específicos
+//db.clientes.find({ apellido: "Pérez", nombre: "Juan" })
+
+// Ordena por nombre y luego apellido
+//db.clientes.find().sort({ nombre: 1, apellido: 1 })

@@ -1,0 +1,11 @@
+// crea el usuario con permisos de lectura y escritura en la base de datos empresa
+db.createUser({
+    user: "nombre_usuario",
+    pwd: "contraseña ",
+    roles: [
+    { role: "readWrite", db: "empresa" }
+  ]
+})
+
+// mustra los usuarios de la base de datos
+//db.getUsers()
