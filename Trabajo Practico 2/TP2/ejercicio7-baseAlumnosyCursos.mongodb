@@ -1,0 +1,42 @@
+use("empresa")
+const matematica = ObjectId()
+const historia = ObjectId()
+const biologia = ObjectId()
+const lengua = ObjectId()
+const programacion = ObjectId()
+
+db.cursos.insertMany([
+  { _id: matematica, nombre: "Matemática" },
+  { _id: historia, nombre: "Historia" },
+  { _id: biologia, nombre: "Biología" },
+  { _id: lengua, nombre: "Lengua" },
+  { _id: programacion, nombre: "Programación" }
+])
+db.alumnos.insertMany([
+    {
+      nombre: "Lucía",
+      apellido: "Pérez",
+      cursos: [
+        matematica,  // Matemática
+        programacion   // Programación
+      ]
+    },
+    {
+      nombre: "Tomás",
+      apellido: "Gómez",
+      cursos: [
+        historia,  // Historia
+        biologia   // Biología
+      ]
+    },
+    {
+      nombre: "Martina",
+      apellido: "López",
+      cursos: [
+        matematica,  // Matemática
+        lengua,  // Lengua
+        programacion   // Programación
+      ]
+    }
+  ])
+  

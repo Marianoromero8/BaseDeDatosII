@@ -1,0 +1,15 @@
+use("empresa")
+db.empleados.updateMany(
+    {}, // {} Selecciona todos los documentos
+    {
+      $set: {
+        direccion: {
+          calle: "Alem",
+          ciudad: "Bahia Blanca",
+          codigo_postal: "8000"
+        }
+      }
+    }
+  )
+// para verificar
+db.empleados.find()
