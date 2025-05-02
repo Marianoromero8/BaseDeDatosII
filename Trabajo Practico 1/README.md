@@ -20,7 +20,7 @@ INSERT INTO MatriculasEstudiantes (ID_MATRICULA, Asignatura, id_alumno) VALUES (
 Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (bd2tp1.matriculasestudiantes)
 ```
 
-## Ejercicio3.
+## Ejercicio 3.
 ### ReadCommitted
 En el Read Committed cada SELECT ve solo datos que ya fueron confirmados por otras transacciones, osea por ejemplo dos usuarios pueden ver el mismo valor antes de modificarlo y el ultimo en hacer el COMMIT sobreescribe el cambio del otro sin darse cuenta
 
@@ -28,9 +28,38 @@ En el Read Committed cada SELECT ve solo datos que ya fueron confirmados por otr
 ### Serializable
 El serializable es mas estricto porque bloquea cualquier operacion que pueda causar inconsistencia, osea  Si un usuario lee y esta modificando una fila , otro usuario B que quiere modificar esa fila debe esperar a que A termine  antes de acceder a esa misma fila.
 
+## Ejercicio 4.
 
+Creamos la tabla productos
+![Punto 4 a](https://github.com/user-attachments/assets/231ef3ee-4a2e-439f-a23d-0231a7b76d47)
+
+Luego creamos un procedimiento para que se crearan automaticamente 100.000 registros y siguiente se ejecuta.
+![Punto 4 b](https://github.com/user-attachments/assets/856597b7-40cf-41b5-99d2-90cb653c2283)
+
+Hacemos un consulta sin indice
+![Punto 4 c](https://github.com/user-attachments/assets/0b0bcbcc-c465-4f19-95a5-084c24b43a41)
+
+Por ultimo creamos un indice y realizamos la consulta para optimizar el filtrado de la columna
+![Punto 4 d](https://github.com/user-attachments/assets/b344b261-9413-4891-aa21-6168de4f43ed)
+
+## Ejercicio 5.
+
+Consulta sin los indices creados
+![image](https://github.com/user-attachments/assets/d9a0a14e-221d-4a53-9583-97f89e1851f4)
+
+Creo los indices 
+![image (1)](https://github.com/user-attachments/assets/9828b86e-681c-44de-adc3-5c884bfd76d2)
+![image (2)](https://github.com/user-attachments/assets/8506c417-0459-4ffe-94bb-d0bf5bbf8696)
+![image (3)](https://github.com/user-attachments/assets/ccf5d964-640b-4dcd-9f4a-de0d733aa08e)
+
+Luego hago la misma consulta del principio pero con los indices creados
+![image (4)](https://github.com/user-attachments/assets/5d55d4cb-0854-49d6-8d84-a9e68c65704c)
+
+La diferencia entre ambas consultas (Primera image y la ultima) esta en la optimización del rendimiento a través del uso de índices.
+Se puede ver una mejoria en el tiempo de respuesta, disminuyendo el mismo a la mitad del tiempo.
 
 ## Ejercicio 6.
+
 Primero creo la vista que resuma las ventas mensuales
 ![Creacion Vista](https://github.com/user-attachments/assets/2ec76833-79f8-4f41-a0e8-55d56bfbf72a)
 
