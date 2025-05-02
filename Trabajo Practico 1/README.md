@@ -55,7 +55,7 @@ Creo los indices
 Luego hago la misma consulta del principio pero con los indices creados
 ![image (4)](https://github.com/user-attachments/assets/5d55d4cb-0854-49d6-8d84-a9e68c65704c)
 
-La diferencia entre ambas consultas (Primera image y la ultima) esta en la optimización del rendimiento a través del uso de índices.
+La diferencia entre ambas consultas (Primera imagen y la ultima) esta en la optimización del rendimiento a través del uso de índices.
 Se puede ver una mejoria en el tiempo de respuesta, disminuyendo el mismo a la mitad del tiempo.
 
 ## Ejercicio 6.
