@@ -33,7 +33,7 @@ El serializable es mas estricto porque bloquea cualquier operacion que pueda cau
 Creamos la tabla productos
 ![Punto 4 a](https://github.com/user-attachments/assets/231ef3ee-4a2e-439f-a23d-0231a7b76d47)
 
-Luego creamos un procedimiento para que se crearan automaticamente 100.000 registros y siguiente se ejecuta.
+Luego creamos un procedimiento para que se crearan automaticamente 20.000 registros y siguiente se ejecuta.
 ![Punto 4 b](https://github.com/user-attachments/assets/856597b7-40cf-41b5-99d2-90cb653c2283)
 
 Hacemos un consulta sin indice
