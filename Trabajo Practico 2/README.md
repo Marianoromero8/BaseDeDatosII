@@ -107,6 +107,6 @@ Muestra todos los usuarios de la base de datos actual
 
 --drop hace que si los archivos que estamos pasando desde el backup ya existen en la carpeta en la que estamos, los dropea primero y los reemplaza por los archivos del backup
 
-![alt text](DropYRestoreNuevoBacukup.jpg)
+![alt text](DropYRestoreNuevoBackup.jpg)
 
 >>>>>>> 913d767ce678180a60fd170a096e1938e8b14cf6
