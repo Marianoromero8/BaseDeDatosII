@@ -97,12 +97,8 @@ Muestra todos los usuarios de la base de datos actual
 
 ### Restauracion de una base de datos
 #### Paso 1: Usar mongorestore
-<<<<<<< HEAD
-```mongorestore --db empresa "/ruta a la carpeta con el backup"```
-=======
 ```mongorestore --drop "C:\Users\Franco\Documents\UTN Tecnicatura en Programacion\Base de Datos 2\NuevoBackup"```
 
 --drop hace que si los archivos que estamos pasando desde el backup ya existen en la carpeta en la que estamos, los dropea primero y los reemplaza por los archivos del backup
 
 ![Drop y Restore Backup](https://github.com/Marianoromero8/BaseDeDatosII/blob/main/Trabajo%20Practico%202/DropYRestoreNuevoBacukup.jpg?raw=true)
->>>>>>> a7b7ee3bd33917674ff9212621304f0691660244
