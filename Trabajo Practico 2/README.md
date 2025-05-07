@@ -72,6 +72,7 @@ Sharding es una técnica para dividir grandes cantidades de datos en fragmentos 
 ## Ejercicio 10
 
 ### Crear un Usuario con permisos de lectura y escritura
+
 #### Paso 1: Seleccionar la base de datos en la que se desee crear el usuario
 `use empresa`
 #### Paso 2: Crear el usuario con permisos de lectura y escritura usando role: "readWrite"
