@@ -41,13 +41,13 @@ Agrego un campo direccion que incluya calle, ciudad y codigo_postal. ```db.emple
 
 Se crea la tabla ventas, y luego se con $group y $sum se calcula la cantidad de ventas por productos
 
-![alt text](Punto5TP2.png)
+![alt text](Punto5.png)
 
 ## Ejercicio 6
 
 Creamos la tabla clientes y creamos un indice ascendente para los campos "nombre" y "apellido
 
-![alt text](Punto6TP2.png)
+![alt text](Punto6.png)
 
 ## Ejercicio 7
 
