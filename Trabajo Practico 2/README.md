@@ -24,6 +24,7 @@ Por ultimo eliminamos al empleado que tiene el puesto `Pasante` - ```db.empleado
 ## Ejercicio 2.
 
 Realizo una consulta que me traiga todos los empleados con la edad entre 25 y 40 años. ```db.empleados.find({$and: [{edad: { $gte: 25 }}, {edad: { $lte: 40 } } ] } )```
+
 ![alt text](busquedaOperadores.jpeg)
 
 ## Ejercicio 3.
@@ -90,8 +91,18 @@ db.createUser({
 Muestra todos los usuarios de la base de datos actual
 ### Backup de una base de datos
 #### Paso 1: Usar mongodump
-```mongodump –db.empresa --out "/ruta a la carpeta donde poner el backup"```
+```mongodump --db=empresa --out "C:\Users\Franco\Documents\UTN Tecnicatura en Programacion\Base de Datos 2\NuevoBackup"```
+
+![alt text](DumpNuevoBackUp.jpg)
 
 ### Restauracion de una base de datos
 #### Paso 1: Usar mongorestore
+<<<<<<< HEAD
 ```mongorestore --db empresa "/ruta a la carpeta con el backup"```
+=======
+```mongorestore --drop "C:\Users\Franco\Documents\UTN Tecnicatura en Programacion\Base de Datos 2\NuevoBackup"```
+
+--drop hace que si los archivos que estamos pasando desde el backup ya existen en la carpeta en la que estamos, los dropea primero y los reemplaza por los archivos del backup
+
+![Drop y Restore Backup](https://github.com/Marianoromero8/BaseDeDatosII/blob/main/Trabajo%20Practico%202/DropYRestoreNuevoBacukup.jpg?raw=true)
+>>>>>>> a7b7ee3bd33917674ff9212621304f0691660244
