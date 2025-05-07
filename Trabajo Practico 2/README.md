@@ -24,6 +24,7 @@ Por ultimo eliminamos al empleado que tiene el puesto `Pasante` - ```db.empleado
 ## Ejercicio 2.
 
 Realizo una consulta que me traiga todos los empleados con la edad entre 25 y 40 años. ```db.empleados.find({$and: [{edad: { $gte: 25 }}, {edad: { $lte: 40 } } ] } )```
+
 ![alt text](busquedaOperadores.jpeg)
 
 ## Ejercicio 3.
