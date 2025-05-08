@@ -1,0 +1,49 @@
+use("tiendaOnline");
+db.ventas.aggregate([
+  {
+    $project: {
+      dia_semana: { $dayOfWeek: "$fecha" }
+    }
+  },
+  {
+    // como group no puede usar el campo dia_semana directamente, se usa un project para crear un nuevo campo
+    $group: {
+      _id: "$dia_semana",
+      cantidad_ventas: { $sum: 1 }
+    }
+  },
+  {
+    $project: {
+      _id: 0,  
+      dia_num: "$_id",
+      cantidad_ventas: 1,
+      dia_nombre: {
+        $switch: {
+        // mongodb usa branches para el switch, evaluando cada caso en orden
+          branches: [
+            { case: { $eq: ["$_id", 1] }, then: "Domingo" },
+            { case: { $eq: ["$_id", 2] }, then: "Lunes" },
+            { case: { $eq: ["$_id", 3] }, then: "Martes" },
+            { case: { $eq: ["$_id", 4] }, then: "Miércoles" },
+            { case: { $eq: ["$_id", 5] }, then: "Jueves" },
+            { case: { $eq: ["$_id", 6] }, then: "Viernes" },
+            { case: { $eq: ["$_id", 7] }, then: "Sábado" }
+          ],
+          // default es el caso por defecto, si no se cumple ninguno de los anteriores
+          default: "Desconocido"
+        }
+      }
+    }
+  },
+  {
+    // ordena por cantidad de ventas, de mayor a menor
+    $sort: { cantidad_ventas: -1 }
+  },
+  // si queremos que solo se muestre el dia con mas ventas, se puede usar un limit
+  {
+    $limit: 1
+  }
+]);
+
+
+  

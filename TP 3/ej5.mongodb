@@ -1,0 +1,27 @@
+use("tiendaOnline");
+
+db.ventas.aggregate([
+    // unir las colecciones ventas y productos
+    {
+      $lookup: {
+        from: "productos",
+        localField: "producto_id",
+        foreignField: "_id",
+        as: "productoInfo"
+      }
+    },
+    {
+      $unwind: "$productoInfo"
+    },
+    {
+      $project: {
+        _id: 1,
+        "cliente.nombre": 1,
+        "productoInfo.nombre": 1,
+        "productoInfo.categoria": 1,
+        cantidad: 1,
+        precio_unitario: 1,
+        total: 1
+      }
+    }
+]);

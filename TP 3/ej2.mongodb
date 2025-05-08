@@ -1,0 +1,39 @@
+use ("tiendaOnline");
+
+// agrupar por categoria y calcular el promedio, maximo y minimo de los precios de los productos
+db.productos.aggregate([
+    {
+      $group: {
+          _id:"$categoria",
+          precio_promedio: {$avg: "$precio"},
+          precio_maximo: {$max:"$precio"},
+          precio_minimo: {$min:"$precio"},
+      }
+    },
+    {
+      $sort: { _id: 1 } // Ordenar por categoría de forma descendente
+    }
+]);
+
+// Obtener el total de ventas por país, la cantidad de transacciones realizadas en cada país y el monto total
+/* db.ventas.aggregate([
+    {
+      $group: {
+        _id: "$cliente.pais",  // Agrupar por país del cliente
+        totalVentas: { $sum: "$total" },  // Suma del monto de ventas
+        cantidadTransacciones: { $sum: 1 } // Conteo de transacciones
+      }
+    },
+    {
+      $project: {
+        pais: "$_id",
+        _id: 0,
+        totalVentas: 1,
+        cantidadTransacciones: 1
+      }
+    },
+    {
+        $sort: { totalVentas: -1 } // Ordenar por total de ventas de forma descendente
+    }
+  ]); */
+  

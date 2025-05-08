@@ -1,0 +1,26 @@
+use("tiendaOnline");
+// Obtener el total vendido por mes
+db.ventas.aggregate([
+    {
+      $group: {
+        // agrupar por mes y año
+        _id: { 
+          mes: { $dateToString: { format: "%Y-%m", date: "$fecha" } }
+        },
+        totalVendido: { $sum: "$total" }
+      }
+    },
+    // renombrar el campo _id a mes
+    {
+      $project: {
+        _id: 0,
+        mes: "$_id.mes",
+        totalVendido: 1
+      }
+    },
+    // ordenar por mes
+    {
+      $sort: { "_id.mes": 1 }
+    }
+  ]);
+  
