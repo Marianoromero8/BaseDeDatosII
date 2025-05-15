@@ -1,5 +1,6 @@
 use("tiendaOnline");
 // calcular el total de ventas por producto
+
 db.ventas.aggregate([
     // unir las colecciones ventas y productos
     {
@@ -10,30 +11,45 @@ db.ventas.aggregate([
         as: "productoInfo"
       }
     },
-    // descomponer el array productoInfo
+    // descomponemos el array productoInfo
     // sin el unwind, productoInfo es un array con un solo elemento y no se puede acceder a sus campos directamente
     {
       $unwind: "$productoInfo"
     },
-    // agrupar por categoria del producto y calcular el total de ventas
+    // si quiero un project primero
+
     {
+      $project: {
+        _id: 0,
+        VentaID: "$_id",
+        nombre: "$productoInfo.nombre",
+        categoria: "$productoInfo.categoria",
+        total: 1,
+      }
+    },
+    {
+      $group: {
+        _id: "$categoria",
+        totalVentas: { $sum: "$total" }
+      }
+    }
+
+
+    // si quiero un group primero
+
+    // agrupamos por categoria del producto y calcular el total de ventas
+ /*    {
       $group: {
         _id: "$productoInfo.categoria",
         totalVentas: { $sum: "$total" }
       }
     },
-    // cambiar el nombre del campo _id a categoria
+    // cambiamos el nombre del campo _id a categoria
     {
       $project: {
         _id: 0,
         categoria: "$_id",
         totalVentas: 1
       }
-    },
-    // ordenar por total de ventas de mayor a menor
-    {
-      $sort: {
-        totalVentas: -1
-      }
-    }
+    }, */
   ]);

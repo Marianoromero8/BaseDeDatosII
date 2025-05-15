@@ -1,7 +1,7 @@
 use("tiendaOnline");
 
 db.ventas.aggregate([
-    // unir las colecciones ventas y productos
+    // unimos las colecciones ventas y productos
     {
       $lookup: {
         from: "productos",
@@ -10,18 +10,22 @@ db.ventas.aggregate([
         as: "productoInfo"
       }
     },
+/*     // descomponemos el array productoInfo
     {
       $unwind: "$productoInfo"
-    },
+    }, */
+    // como es informacion completa mediante lookup comentamos el project
+
+   /*  // mostramos la informacion
     {
       $project: {
         _id: 1,
-        "cliente.nombre": 1,
-        "productoInfo.nombre": 1,
-        "productoInfo.categoria": 1,
+        cliente: "$cliente.nombre",
+        producto: "$productoInfo.nombre",
+        categoria: "$productoInfo.categoria",
         cantidad: 1,
         precio_unitario: 1,
         total: 1
       }
-    }
+    } */
 ]);

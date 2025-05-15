@@ -1,0 +1,76 @@
+use("tiendaOnline");
+db.ventas.aggregate([
+  // Unimos con productos
+  {
+      $lookup: {
+          from: "productos",
+          localField: "producto_id",
+          foreignField: "_id",
+          as: "productoInfo"
+      }
+  },
+  // Descomponemos productoInfo
+  {
+      $unwind: "$productoInfo"
+  },
+  // Agrupamos por ID, añadimos el nombre y la categoria, sumamos cantidad y monto total
+  {
+    $group: {
+      _id: "$producto_id",
+      nombre: { $first: "$productoInfo.nombre" },
+      categoria: { $first: "$productoInfo.categoria" },
+      unidadesVendidas: { $sum: "$cantidad" },
+      montoTotalGenerado: { $sum: "$total" },
+      valoraciones: { $first: "$productoInfo.valoraciones" }
+    }
+  },
+  // si quiero despues usar map debo hacer first para tener solo un arreglo sino, 
+  // MongoDB no podrá resolverlo correctamente porque input sería un array de arrays, no un array plano de objetos. Esto puede:
+    // Causar un error, o
+    // Producir un resultado incorrecto (por ejemplo, si accidentalmente promedias el número de arrays, no sus contenidos).
+
+  // añadimos el campo promedio puntuaciones
+  {
+    $addFields: {
+      
+      puntuacionPromedio: {
+        $avg :{
+          // usamos map para transformar los elementos de un array
+          $map: {
+            input: "$valoraciones",          // El array sobre el cual aplicar la transformación
+            as: "valoraciones",            // Un alias para cada elemento del array durante la iteración
+            in: "$$valoraciones.puntuacion"         // La expresión a aplicar a cada elemento del array
+
+            // En ciertas etapas de la agregación, como $map, $reduce o $filter, puedes usar $$ para acceder 
+            // a las variables locales que hayas definido. Estas variables se definen usando el as: en la operación 
+            // y se referencian mediante $$.
+          }
+        }
+      }
+    }
+  },
+
+  // Sacamos el campo _id
+  {
+    $project: {
+      _id: 0,
+      nombre: 1,
+      categoria: 1,
+      unidadesVendidas: 1,
+      montoTotalGenerado: 1,
+      puntuacionPromedio: 1
+    }
+  },
+  // Ordenamos por unidades vendidas de mayor a menor
+  {
+      $sort: { unidadesVendidas: -1 }
+  },
+  // Limitamos a los 3 productos más vendidos
+  {
+      $limit: 3
+  }
+])
+
+
+
+  

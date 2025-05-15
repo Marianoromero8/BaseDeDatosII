@@ -1,0 +1,29 @@
+use("tiendaOnline")
+
+db.productos.aggregate([
+    {
+        $unwind: "$valoraciones"
+    },
+    // agrupamos por puntuacion y contamos la cantidad de valoraciones
+    {
+        $group: {
+            _id: "$valoraciones.puntuacion", 
+            cantidadValoraciones: { $sum: 1 },
+            // para ver los nombres de los productos
+            productos: { $push: "$nombre" } 
+        }
+    },
+    // renombramos _id a puntuacion
+    {
+        $project: {
+          _id: 0,
+          puntuacion: "$_id",
+          productos:1,
+          cantidadValoraciones: 1
+        }
+    },
+    // ordenar por puntuacion de forma descendente
+    {
+        $sort: { puntuacion: -1 }
+    },
+]);

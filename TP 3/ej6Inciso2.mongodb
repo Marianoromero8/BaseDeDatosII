@@ -1,25 +1,25 @@
 use("tiendaOnline");
+
 db.ventas.aggregate([
   {
-    $project: {
-      dia_semana: { $dayOfWeek: "$fecha" }
+    $addFields:{
+      diaSemana: { $dayOfWeek: "$fecha" },
     }
   },
+  // agrupamos por dia de la semana y calculamos el total vendido y la cantidad de ventas
   {
-    // como group no puede usar el campo dia_semana directamente, se usa un project para crear un nuevo campo
     $group: {
-      _id: "$dia_semana",
-      cantidad_ventas: { $sum: 1 }
+      _id: "$diaSemana",
+      //montoTotal: { $sum: "$total" },
+      cantidadVentas: { $sum: 1 },
+      fechas: { $push: "$fecha" }
     }
   },
+  // para que nos muestre el nombre del dia (opcional)
   {
-    $project: {
-      _id: 0,  
-      dia_num: "$_id",
-      cantidad_ventas: 1,
-      dia_nombre: {
+    $addFields: {
+      nombreDia: {
         $switch: {
-        // mongodb usa branches para el switch, evaluando cada caso en orden
           branches: [
             { case: { $eq: ["$_id", 1] }, then: "Domingo" },
             { case: { $eq: ["$_id", 2] }, then: "Lunes" },
@@ -29,21 +29,46 @@ db.ventas.aggregate([
             { case: { $eq: ["$_id", 6] }, then: "Viernes" },
             { case: { $eq: ["$_id", 7] }, then: "Sábado" }
           ],
-          // default es el caso por defecto, si no se cumple ninguno de los anteriores
           default: "Desconocido"
         }
       }
     }
   },
+  
+  // renombramos _id
   {
-    // ordena por cantidad de ventas, de mayor a menor
-    $sort: { cantidad_ventas: -1 }
+    $project: {
+      _id: 0,
+      diaSemana: "$_id",
+      montoTotal: 1,
+      cantidadVentas: 1,
+      nombreDia: 1,
+      fechas: 1
+    }
   },
-  // si queremos que solo se muestre el dia con mas ventas, se puede usar un limit
+  // ordenamos por el dia que hubo mayor CANTIDAD de ventas
+  {
+    $sort: { cantidadVentas: -1 }
+  },
+  // limitamos a 1 para que solo muestre el dia con mass ventas
   {
     $limit: 1
   }
 ]);
 
 
-  
+/* En MongoDB, cuando usas $dayOfWeek, el valor retornado sigue la convención del estándar ISO-8601 para JavaScript, donde:
+
+1 = Domingo
+
+2 = Lunes
+
+3 = Martes
+
+4 = Miércoles
+
+5 = Jueves
+
+6 = Viernes
+
+7 = Sábado */

@@ -1,7 +1,8 @@
 use ("tiendaOnline");
 
 // el ultimo agregado es el que se ejecuta
-// 1. Obtener todos los productos de la categoría "Electrónica" que tengan un precio mayor a 500.
+
+// obtener todos los productos de la categoría "Electrónica" que tengan un precio mayor a 500
 db.productos.aggregate([
     {
       $match: {
@@ -11,7 +12,7 @@ db.productos.aggregate([
     }
   ])
 
-// 2. Obtener todos los clientes que hayan realizado compras en el mes de enero de 2023.
+// encontrar las ventas realizadas a clientes de españa con estado entregado
 /*   db.ventas.aggregate([
     {
       $match: {
