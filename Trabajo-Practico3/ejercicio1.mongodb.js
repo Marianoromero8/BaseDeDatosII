@@ -1,0 +1,10 @@
+// Encontrar todos los productos de la categoría "Electrónica" con un precio superior a 500.
+// Encontrar todas las ventas realizadas a clientes de "España" que tengan estado "Entregado".
+
+db.productos.aggregate([
+    { $match : {categoria: "Electrónica", precio: { $gt: 500}}}
+])
+
+db.ventas.aggregate([
+    { $match : {"cliente.pais": "España", estado: "Entregado"}}
+])
