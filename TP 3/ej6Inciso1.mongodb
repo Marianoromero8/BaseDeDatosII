@@ -9,7 +9,7 @@ db.ventas.aggregate([
     },
     {
       $group: {
-        // agrupamos por mes, calculamos el total y damos un arreglo con los producto_id
+        // agrupamos por mes, calculamos el total
         _id: "$mes",
         totalVendido: { $sum: "$total" },
       }
