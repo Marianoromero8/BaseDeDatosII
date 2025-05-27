@@ -1,7 +1,6 @@
 use("tiendaOnline");
 // Obtener el total vendido por mes
 db.ventas.aggregate([
-    // Extraemos  mes de la fecha de la venta
     {
       $addFields: {
         mes: { $month: "$fecha" }
@@ -9,12 +8,10 @@ db.ventas.aggregate([
     },
     {
       $group: {
-        // agrupamos por mes, calculamos el total
         _id: "$mes",
         totalVendido: { $sum: "$total" },
       }
     },
-    // renombramos el campo _id a mes
     {
       $project: {
         _id: 0,

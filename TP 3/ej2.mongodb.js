@@ -15,21 +15,16 @@ db.productos.aggregate([
 
 // Obtener el total de ventas por país, la cantidad de transacciones realizadas en cada país y el monto total
 
-/* db.ventas.aggregate([
+db.ventas.aggregate([
   {
     $group: {
-      // Agrupamos por país del cliente, el campo _id es obligatorio
       _id: "$cliente.pais",
-      // Sumamos el total de ventas por país
       totalVentas: { $sum: "$total" },
-      // Contamos cuántas transacciones hubo en ese país
       cantidadTransacciones: { $sum: 1 },
-      // Agrupamos por clientes únicos
       clientes: { $addToSet: "$cliente.nombre" }  
     }
   },
   {
-    // Cambiamos el nombre del campo _id a pais 
     $project: {
       pais: "$_id",
       _id: 0,
@@ -37,11 +32,7 @@ db.productos.aggregate([
       cantidadTransacciones: 1,
       clientes: 1
     }
-  },
-  {
-    // Ordenamos los países de mayor a menor según el total de ventas
-    $sort: { totalVentas: -1 }
   }
-]); */
+]);
 
   

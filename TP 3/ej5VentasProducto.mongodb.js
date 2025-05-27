@@ -2,7 +2,6 @@ use("tiendaOnline");
 // calcular el total de ventas por producto
 
 db.ventas.aggregate([
-    // unir las colecciones ventas y productos
     {
       $lookup: {
         from: "productos",
@@ -11,8 +10,6 @@ db.ventas.aggregate([
         as: "productoInfo"
       }
     },
-    // descomponemos el array productoInfo
-    // sin el unwind, productoInfo es un array con un solo elemento y no se puede acceder a sus campos directamente
     {
       $unwind: "$productoInfo"
     },

@@ -30,6 +30,7 @@ db.ventas.aggregate([
             cantidadTotal: 1,
             montoTotal: 1,
             valoraciones: 1,
+            // como valoraciones es un array de objetos podemos usar avg
             promedioValoraciones: {$avg: "$valoraciones.puntuacion"}
         }
     },

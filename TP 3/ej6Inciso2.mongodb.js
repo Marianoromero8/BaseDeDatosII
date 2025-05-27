@@ -6,16 +6,13 @@ db.ventas.aggregate([
       diaSemana: { $dayOfWeek: "$fecha" },
     }
   },
-  // agrupamos por dia de la semana y calculamos el total vendido y la cantidad de ventas
   {
     $group: {
       _id: "$diaSemana",
-      //montoTotal: { $sum: "$total" },
       cantidadVentas: { $sum: 1 },
       fechas: { $push: "$fecha" }
     }
   },
-  // para que nos muestre el nombre del dia (opcional)
   {
     $addFields: {
       nombreDia: {
@@ -34,8 +31,6 @@ db.ventas.aggregate([
       }
     }
   },
-  
-  // renombramos _id
   {
     $project: {
       _id: 0,
@@ -46,29 +41,11 @@ db.ventas.aggregate([
       fechas: 1
     }
   },
-  // ordenamos por el dia que hubo mayor CANTIDAD de ventas
   {
     $sort: { cantidadVentas: -1 }
   },
-  // limitamos a 1 para que solo muestre el dia con mass ventas
-  {
+/*   {
     $limit: 1
-  }
+  } */
 ]);
 
-
-/* En MongoDB, cuando usas $dayOfWeek, el valor retornado sigue la convención del estándar ISO-8601 para JavaScript, donde:
-
-1 = Domingo
-
-2 = Lunes
-
-3 = Martes
-
-4 = Miércoles
-
-5 = Jueves
-
-6 = Viernes
-
-7 = Sábado */

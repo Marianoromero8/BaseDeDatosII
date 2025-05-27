@@ -16,12 +16,10 @@ db.productos.aggregate([
 
 // Crear una proyección que incluya el ID de venta, el nombre del cliente, el total y una nueva propiedad "descuento" que sea el 10% del total.
 
-/* db.ventas.aggregate([
+db.ventas.aggregate([
     {
       $project: {
         _id: 1,
-        // El $ se usa cuando accedes a un campo dentro de un subdocumento o arreglo en MongoDB, 
-        // de modo que MongoDB sabe que estás referenciando un campo dentro de un objeto.
         cliente: "$cliente.nombre",
         total: 1,
         descuento: {
@@ -29,4 +27,4 @@ db.productos.aggregate([
         }
       }
     }
-  ]); */
+  ]);

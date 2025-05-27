@@ -2,23 +2,22 @@ use("tiendaOnline")
 
 use("tiendaOnline");
 
-db.ventas.aggregate([
+db.ventasTP3.aggregate([
   {
     $lookup: {
-      from: "productos",
+      from: "productosTP3",
       localField: "producto_id",
       foreignField: "_id",
       as: "productoInfo"
     }
   },
-  { 
-    $unwind: "$productoInfo" 
-  },
+  { $unwind: "$productoInfo" },
   {
     $addFields: {
       mes: { $month: "$fecha" }
     }
   },
+  // se agrupa por mes y producto
   {
     $group: {
       _id: {
@@ -26,25 +25,36 @@ db.ventas.aggregate([
         producto_id: "$producto_id"
       },
       nombreProducto: { $first: "$productoInfo.nombre" },
-      cantidadVendida: { $sum: "$cantidad" },
-      totalIngresosProducto: { $sum: "$total" }
+      cantidadTotal: { $sum: "$cantidad" },
+      totalMontoProducto: { $sum: "$total" }
+    }
+  },
+  // hago un sort por mes ascendente y cantidad descendente
+  {
+    $sort: {
+      "_id.mes": 1,
+      cantidadTotal: -1
+    }
+  },
+  // Necesito un segundo $group que agrupe por mes y tome el primer producto (que será el más vendido porque ordene en el sort antes).
+  {
+    $group: {
+      _id: "$_id.mes",
+      productoMasVendido: { $first: "$nombreProducto" },
+      cantidadVendida: { $first: "$cantidadTotal" },
+      montoTotal: { $first: "$totalMontoProducto" }
     }
   },
   {
     $project: {
       _id: 0,
-      mes: "$_id.mes",
-      productoId: "$_id.producto_id",
-      nombreProducto: 1,
+      mes: "$_id",
+      productoMasVendido: 1,
       cantidadVendida: 1,
-      totalIngresosProducto: 1
+      montoTotal: 1
     }
   },
   {
-    $sort: {
-      mes: 1,
-      cantidadVendida: -1,
-      totalIngresosProducto: -1
-    }
+    $sort: { mes: 1 }
   }
-]);
+])

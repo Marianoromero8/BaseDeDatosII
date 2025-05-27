@@ -4,7 +4,6 @@ db.productos.aggregate([
     {
         $unwind: "$valoraciones"
     },
-    // agrupamos por puntuacion y contamos la cantidad de valoraciones
     {
         $group: {
             _id: "$valoraciones.puntuacion", 
@@ -13,7 +12,6 @@ db.productos.aggregate([
             productos: { $push: "$nombre" } 
         }
     },
-    // renombramos _id a puntuacion
     {
         $project: {
           _id: 0,
@@ -22,7 +20,6 @@ db.productos.aggregate([
           cantidadValoraciones: 1
         }
     },
-    // ordenar por puntuacion de forma descendente
     {
         $sort: { puntuacion: -1 }
     },

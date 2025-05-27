@@ -1,7 +1,5 @@
 use ("tiendaOnline");
 
-// el ultimo agregado es el que se ejecuta
-
 // obtener todos los productos de la categoría "Electrónica" que tengan un precio mayor a 500
 db.productos.aggregate([
     {
@@ -13,13 +11,13 @@ db.productos.aggregate([
   ])
 
 // encontrar las ventas realizadas a clientes de españa con estado entregado
-/*   db.ventas.aggregate([
+  db.ventas.aggregate([
     {
       $match: {
         "cliente.pais": "España",
         estado: "Entregado"
       }
     }
-  ]) */
+  ])
 
   

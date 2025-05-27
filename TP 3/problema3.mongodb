@@ -1,49 +1,118 @@
 use("tiendaOnline");
 
 db.ventas.aggregate([
-  // Unimos la venta con su producto correspondiente
-  // lo extra de productos esta como array en producto_info
-  {
-    $lookup: {
-      from: "productos",
-      localField: "producto_id",
-      foreignField: "_id", // Usamos _id porque así está en "productos"
-      as: "producto_info"
-    }
-  },
-  { $unwind: "$producto_info" },
+    {
+        $lookup: {
+            from: "productos",
+            localField: "producto_id",
+            foreignField: "_id",
+            as: "productoInfo"
+        }
+    },
+    { $unwind: "$productoInfo" },
 
-  // Agrupamos por cliente + producto + categoría para contar compras por tipo
-  {
-    $group: {
-      _id: {
-        cliente: "$cliente.nombre",
-        producto: "$producto_info.nombre",
-        categoria: "$producto_info.categoria"
-      },
-      cantidadComprada: { $sum: "$cantidad" },
-      totalGastado: { $sum: "$total" },
-      numCompras: { $sum: 1 }
-    }
-  },
+    // Añadimos campos útiles
+    {
+        $addFields: {
+            cliente: "$cliente.nombre",
+            producto: "$productoInfo.nombre",
+            categoria: "$productoInfo.categoria",
+            fecha: "$fecha"
+        }
+    },
 
-  // Ordenamos por cliente y cantidad para identificar lo más comprado
-  {
-    $sort: {
-      "_id.cliente": 1,
-      cantidadComprada: -1
-    }
-  },
+    // Hacemos un primer group para preparar 
+    {
+        $group: {
+            _id: {
+                cliente: "$cliente",
+                producto: "$producto",
+                categoria: "$categoria"
+            },
+            totalGastado: { $sum: "$total" },
+            cantidadComprada: { $sum: "$cantidad" },
+            fechas: { $push: "$fecha" },
+            numCompras: { $sum: 1 }
+        }
+    },
 
-  // Agrupamos solo por cliente para obtener resumen final
-  // se utilizan los datos del primer group 
-  {
-    $group: {
-      _id: "$_id.cliente",
-      totalGastado: { $sum: "$totalGastado" },
-      numCompras: { $sum: "$numCompras" },
-      productoFavorito: { $first: "$_id.producto" },
-      categoriaFavorita: { $first: "$_id.categoria" }
+    // Agrupamos por cliente para consolidar toda la información
+    {
+        $group: {
+            _id: "$_id.cliente",
+            totalGastadoCompleto: { $sum: "$totalGastado" },
+            numCompras: { $sum: "$numCompras" },
+            productos: {
+                $push: {
+                    nombre: "$_id.producto",
+                    cantidad: "$cantidadComprada"
+                }
+            },
+            categorias: {
+                $push: {
+                    nombre: "$_id.categoria",
+                    total: "$totalGastado"
+                }
+            },
+            // "$fechas" es un array de arrays de fechas.
+            fechas: { $push: "$fechas" }
+        }
+    },
+
+    // Obtenemos producto favorito, categoría favorita, y fechas
+    {
+        $project: {
+            totalGastadoCompleto: 1,
+            numCompras: 1,
+            productoFavorito: {
+                $first: {
+                    $slice: [
+                        { $sortArray: { input: "$productos", sortBy: { cantidad: -1 } } },
+                        1
+                    ]
+                }
+            },
+            categoriaFavorita: {
+                $first: {
+                    $slice: [
+                        { $sortArray: { input: "$categorias", sortBy: { total: -1 } } },
+                        1
+                    ]
+                }
+            },
+            // al ser "$fechas" es un array de arrays de fechas.
+            // uso reduce para recorrer cada uno de esos arrays internos.
+            // y luego  concatenar cada($$value) con el array actual ($$this).
+            // el resultado es un solo array plano con todas las fechas juntas
+            fechasCompra: {
+                $reduce: {
+                    input: "$fechas",          // array de arrays
+                    initialValue: [],          // empezamos con un array vacío
+                    in: {                      // en cada paso, agregamos el subarray actual $$this
+                        $concatArrays: ["$$value", "$$this"]
+                    }
+                }
+            }
+        }
+    },
+
+    // Calculamos primera y última compra
+    {
+        $addFields: {
+            primeraCompra: { $min: "$fechasCompra" },
+            ultimaCompra: { $max: "$fechasCompra" }
+        }
+    },
+    {
+        $project: {
+            _id: 0,
+            cliente: "$_id",
+            totalGastadoCompleto: 1,
+            numCompras: 1,
+            productoFavorito: "$productoFavorito.nombre",
+            categoriaFavorita: "$categoriaFavorita.nombre",
+            primeraCompra: 1,
+            ultimaCompra: 1
+        }
     }
-  }
-])
+]);
