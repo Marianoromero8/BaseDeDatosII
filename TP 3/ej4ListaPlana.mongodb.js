@@ -4,15 +4,14 @@ use("tiendaOnline");
 
 db.productos.aggregate([
   {
-    // Descomponemos el array de valoraciones en documentos individuales
     $unwind: "$valoraciones"  
   },
-  {
+/*   {
     $project: {
       _id: 1, 
       nombre: 1,  
       usuario: "$valoraciones.usuario",
       puntuacion: "$valoraciones.puntuacion"
     }
-  }
+  } */
 ])

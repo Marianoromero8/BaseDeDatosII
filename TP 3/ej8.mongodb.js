@@ -13,7 +13,6 @@ db.ventas.aggregate([
     },
     {
         $group: {
-            // como puede haber mas de 1 venta de un mismo producto uso first para obtener informacion
             _id: "$producto_id",
             nombreProducto: { $first: "$productoInfo.nombre" },
             categoriaProducto: { $first: "$productoInfo.categoria" },
@@ -30,7 +29,6 @@ db.ventas.aggregate([
             cantidadTotal: 1,
             montoTotal: 1,
             valoraciones: 1,
-            // como valoraciones es un array de objetos podemos usar avg
             promedioValoraciones: {$avg: "$valoraciones.puntuacion"}
         }
     },
