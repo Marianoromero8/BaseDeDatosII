@@ -5,12 +5,12 @@ const Libro = require('./libro.model').Libro;
 const Prestamo = mongoose.model('Prestamo', prestamoSchema);
 
 class PrestamoModel {
-  async obtenerTodos() {
+  async obtenerTodosPrestamosModel() {
     // populamos para traer info del libro
     return await Prestamo.find().populate('libroId');
   }
 
-  async prestarLibro({ isbn, usuario }) {
+  async prestarLibroModel({ isbn, usuario }) {
     // Buscar el libro por ISBN
     const libro = await Libro.findOne({ isbn });
     if (!libro) {
@@ -34,14 +34,14 @@ class PrestamoModel {
     });
 
     await nuevoPrestamo.save();
-
+    
     libro.disponibles -= 1;
     await libro.save();
 
     return nuevoPrestamo;
   }
 
-  async devolverLibro(prestamoId) {
+  async devolverLibroModel(prestamoId) {
     const prestamo = await Prestamo.findById(prestamoId);
     if (!prestamo) {
       throw new Error('Préstamo no encontrado');

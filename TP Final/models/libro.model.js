@@ -5,12 +5,12 @@ const libroSchema = require('./entities/libro.entity');
 const Libro = mongoose.model('Libro', libroSchema);
 
 class LibroModel {
-  async obtenerTodos() {
+  async obtenerTodosLibrosModel() {
     return await Libro.find();
   }
 
-  async buscarPorCriterio(criterio = '') {
-    const regex = new RegExp(criterio, 'i');
+  async buscarPorCriterioModel(criterio = '') {
+    const regex = new RegExp(criterio, 'i'); // 'i' para búsqueda insensible a mayúsculas/minúsculas
     return await Libro.find({
       $or: [
         { titulo: regex },
@@ -20,7 +20,7 @@ class LibroModel {
     });
   }
 
-  async crearSiNoExiste(data) {
+  async agregarLibroModel(data) {
     const existente = await Libro.findOne({ isbn: data.isbn });
     if (existente) {
       throw new Error('El libro con ese ISBN ya existe');
@@ -28,7 +28,7 @@ class LibroModel {
     return await Libro.create(data);
   }
 
-  async obtenerTopPrestados() {
+  async obtenerTopPrestadosModel() {
     return await Libro.aggregate([
       {
         $lookup: {
