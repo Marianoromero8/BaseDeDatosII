@@ -1,0 +1,249 @@
+Punto 1)
+
+Crear datos en Neo4J:
+// Crear departamentos
+CREATE (d1:Departamento {nombre: "Recursos Humanos"})
+CREATE (d2:Departamento {nombre: "Desarrollo"})
+CREATE (d3:Departamento {nombre: "Marketing"})
+
+// Crear empleados y asignarlos a departamentos
+CREATE (e1:Empleado {nombre: "Ana"})
+CREATE (e2:Empleado {nombre: "Luis"})
+CREATE (e3:Empleado {nombre: "Carla"})
+CREATE (e4:Empleado {nombre: "Pedro"})
+CREATE (e5:Empleado {nombre: "Marta"})
+CREATE (e6:Empleado {nombre: "Jorge"})
+
+CREATE (e1)-[:PERTENECE_A]->(d1)
+CREATE (e2)-[:PERTENECE_A]->(d2)
+CREATE (e3)-[:PERTENECE_A]->(d3)
+CREATE (e4)-[:PERTENECE_A]->(d2)
+CREATE (e5)-[:PERTENECE_A]->(d3)
+CREATE (e6)-[:PERTENECE_A]->(d1)
+
+// Crear proyectos
+CREATE (p1:Proyecto {nombre: "Proyecto Apollo"})
+CREATE (p2:Proyecto {nombre: "Proyecto Zeus"})
+
+// Asignar empleados a proyectos con horas semanales
+CREATE (e1)-[:TRABAJA_EN {horas: 20}]->(p1)
+CREATE (e2)-[:TRABAJA_EN {horas: 30}]->(p1)
+CREATE (e4)-[:TRABAJA_EN {horas: 10}]->(p1)
+CREATE (e2)-[:TRABAJA_EN {horas: 15}]->(p2)
+CREATE (e3)-[:TRABAJA_EN {horas: 25}]->(p2)
+CREATE (e5)-[:TRABAJA_EN {horas: 20}]->(p2)
+CREATE (e6)-[:TRABAJA_EN {horas: 10}]->(p2)
+
+// Definir líderes de proyectos
+CREATE (e1)-[:LIDERA]->(p1)
+CREATE (e3)-[:LIDERA]->(p2)
+
+Consulta 1)  Obtener el nombre del proyecto, su líder y los empleados asignados.
+
+// encontramos cada proyecto y su lider
+MATCH (lider:Empleado)-[:LIDERA]->(p:Proyecto)  
+
+// encontramos los empleados que trabajan en el proyecto
+OPTIONAL MATCH (e:Empleado)-[:TRABAJA_EN]->(p)
+
+// evita que el líder aparezca dos veces
+WHERE e <> lider
+  
+// con collect juntamos todas los nombres de empleados en una lista
+RETURN 
+  p.nombre AS proyecto,
+  lider.nombre AS lider,
+  collect(e.nombre) AS empleados_asignados;		
+
+Consulta 2) Calcular el total de horas semanales por proyecto.
+
+// Busca todas las relaciones TRABAJA_EN entre empleados y proyectos
+MATCH (e:Empleado)-[r:TRABAJA_EN]->(p:Proyecto)
+
+// Retorna el nombre del proyecto y la suma total de horas semanales
+// El RETURN agrupa por proyecto (p.nombre)
+RETURN 
+  p.nombre AS Proyecto, 					
+  sum(r.horas) AS TotalHorasSemanales
+	
+						
+	   
+Consulta 3) Listar los empleados que trabajan en más de un proyecto.
+
+// Buscar empleados y los proyectos en los que trabajan
+MATCH (e:Empleado)-[:TRABAJA_EN]->(p:Proyecto)
+
+// Agrupar por empleado y contar la cantidad de proyectos
+WITH e, count(p) AS cantidadProyectos
+
+// Filtrar empleados que trabajan en más de un proyecto
+WHERE cantidadProyectos > 1
+
+// Mostrar el nombre del empleado y la cantidad de proyectos asignados
+RETURN e.nombre, cantidadProyectos;
+
+
+Punto 4)
+
+// =======================
+// Crear Estudiantes
+// =======================
+CREATE (es1:Estudiante {nombre: "Ana"});
+CREATE (es2:Estudiante {nombre: "Luis"});
+CREATE (es3:Estudiante {nombre: "Carla"});
+CREATE (es4:Estudiante {nombre: "Pedro"});
+CREATE (es5:Estudiante {nombre: "Marta"});
+CREATE (es6:Estudiante {nombre: "Jorge"});
+
+// =======================
+// Crear Materias
+// =======================
+CREATE (m1:Materia {nombre: "Matemáticas"});
+CREATE (m2:Materia {nombre: "Programación"});
+CREATE (m3:Materia {nombre: "Bases de Datos"});
+CREATE (m4:Materia {nombre: "Sistemas Operativos"});
+CREATE (m5:Materia {nombre: "Redes"});
+
+// =======================
+// Crear Prerrequisito
+// =======================
+MATCH (m5:Materia {nombre: "Redes"}), (m4:Materia {nombre: "Sistemas Operativos"})
+CREATE (m5)-[:PRERREQUISITO]->(m4);
+
+// =======================
+// Crear Cursos
+// =======================
+CREATE (c1:Curso {codigo: "MATH101", nombre: "Matemáticas Básicas"});
+CREATE (c2:Curso {codigo: "PROG201", nombre: "Programación I"});
+CREATE (c3:Curso {codigo: "BD301", nombre: "Bases de Datos Avanzadas"});
+CREATE (c4:Curso {codigo: "SO401", nombre: "Sistemas Operativos"});
+CREATE (c5:Curso {codigo: "RED501", nombre: "Redes de Computadoras"});
+CREATE (c6:Curso {codigo: "PROG202", nombre: "Programación II"});
+
+// =======================
+// Relacionar Cursos con Materias
+// =======================
+MATCH (c1:Curso {codigo: "MATH101"}), (m1:Materia {nombre: "Matemáticas"})
+CREATE (c1)-[:CORRESPONDE_A]->(m1);
+
+MATCH (c2:Curso {codigo: "PROG201"}), (m2:Materia {nombre: "Programación"})
+CREATE (c2)-[:CORRESPONDE_A]->(m2);
+
+MATCH (c3:Curso {codigo: "BD301"}), (m3:Materia {nombre: "Bases de Datos"})
+CREATE (c3)-[:CORRESPONDE_A]->(m3);
+
+MATCH (c4:Curso {codigo: "SO401"}), (m4:Materia {nombre: "Sistemas Operativos"})
+CREATE (c4)-[:CORRESPONDE_A]->(m4);
+
+MATCH (c5:Curso {codigo: "RED501"}), (m5:Materia {nombre: "Redes"})
+CREATE (c5)-[:CORRESPONDE_A]->(m5);
+
+MATCH (c6:Curso {codigo: "PROG202"}), (m2:Materia {nombre: "Programación"})
+CREATE (c6)-[:CORRESPONDE_A]->(m2);
+
+// =======================
+// Inscripciones y Calificaciones
+// =======================
+
+// Ana
+MATCH (e:Estudiante {nombre: "Ana"}), (c:Curso {codigo: "MATH101"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 85}]->(c);
+MATCH (e:Estudiante {nombre: "Ana"}), (c:Curso {codigo: "PROG201"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 90}]->(c);
+
+// Luis
+MATCH (e:Estudiante {nombre: "Luis"}), (c:Curso {codigo: "PROG201"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 75}]->(c);
+MATCH (e:Estudiante {nombre: "Luis"}), (c:Curso {codigo: "BD301"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 80}]->(c);
+MATCH (e:Estudiante {nombre: "Luis"}), (c:Curso {codigo: "PROG202"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 78}]->(c);
+
+// Carla
+MATCH (e:Estudiante {nombre: "Carla"}), (c:Curso {codigo: "MATH101"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 92}]->(c);
+MATCH (e:Estudiante {nombre: "Carla"}), (c:Curso {codigo: "SO401"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 88}]->(c);
+
+// Pedro
+MATCH (e:Estudiante {nombre: "Pedro"}), (c:Curso {codigo: "SO401"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 75}]->(c);
+MATCH (e:Estudiante {nombre: "Pedro"}), (c:Curso {codigo: "BD301"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 65}]->(c);
+
+// Marta
+MATCH (e:Estudiante {nombre: "Marta"}), (c:Curso {codigo: "PROG201"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 82}]->(c);
+MATCH (e:Estudiante {nombre: "Marta"}), (c:Curso {codigo: "RED501"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 69}]->(c);
+
+// Jorge
+MATCH (e:Estudiante {nombre: "Jorge"}), (c:Curso {codigo: "SO401"})
+CREATE (e)-[:INSCRITO_EN {calificacion: 90}]->(c);
+
+Consulta 1) Listar la transcripción académica de un estudiante.
+	   
+// Buscar el estudiante Ana y sus inscripciones en cursos
+MATCH (es:Estudiante {nombre: "Ana"})-[ins:INSCRITO_EN]->(c:Curso)
+
+// Relacionar cada curso con su materia correspondiente
+MATCH (c)-[:CORRESPONDE_A]->(m:Materia)
+
+// Retornar la información deseada agrupada por estudiante
+RETURN 
+  es.nombre AS Estudiante,
+  c.codigo AS CodigoCurso, 
+  c.nombre AS NombreCurso,
+  m.nombre AS Materia,
+  ins.calificacion AS Calificacion
+
+	   
+Consulta 2) Verificar si un estudiante puede inscribirse en una materia (si aprobó los prerrequisitos)
+
+// Obtener la materia objetivo y sus prerrequisitos
+MATCH (mObjetivo:Materia {nombre: "Redes"})-[:PRERREQUISITO]->(mPrereq:Materia)
+
+// Obtener los cursos correspondientes a los prerrequisitos
+MATCH (cPrereq:Curso)-[:CORRESPONDE_A]->(mPrereq)
+
+// Buscar si el estudiante está inscrito en esos cursos
+OPTIONAL MATCH (e:Estudiante {nombre: "Pedro"})-[ins:INSCRITO_EN]->(cPrereq)
+
+// Mostrar el estado de cumplimiento del prerrequisito
+RETURN 
+  mObjetivo.nombre AS MateriaObjetivo,
+  mPrereq.nombre AS Prerrequisito,
+  CASE 
+    WHEN ins.calificacion >= 70 THEN "Aprobado"
+    WHEN ins.calificacion < 70 THEN "Reprobado"
+    ELSE "No cursado"
+  END AS EstadoPrerrequisito
+
+
+Consulta 3) Calcular el promedio de calificaciones por estudiante.
+		
+// Buscar estudiantes y sus inscripciones en cursos
+MATCH (e:Estudiante)-[i:INSCRITO_EN]->(c:Curso)
+
+// Calcular y retornar el promedio de calificaciones por estudiante
+RETURN 
+  e.nombre AS Estudiante, 
+  AVG(i.calificacion) AS Promedio
+
+
+Consulta 4) Detectar materias con promedio inferior a 7.
+
+// Relacionar Materias con Cursos
+MATCH (m:Materia)<-[:CORRESPONDE_A]-(c:Curso)
+WITH m, c
+
+// Relacionar Cursos con Inscripciones (Estudiantes)
+MATCH (c)<-[i:INSCRITO_EN]-(:Estudiante)
+
+//calcular el promedio
+WITH m.nombre AS Materia, AVG(i.calificacion) AS Promedio
+ 
+// filtrar menores de 70
+WHERE Promedio < 70										  
+RETURN Materia, ROUND(Promedio, 2) AS Promedio
+
