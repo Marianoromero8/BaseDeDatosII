@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const Prestamo = require('../models/prestamo.model');
+const { Prestamo } = require('../models/prestamo.model');
 
 const prestamos = [
   {
