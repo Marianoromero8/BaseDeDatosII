@@ -1,4 +1,4 @@
-# Proyecto Final MongodDB con Mongoose
+# Proyecto 1: Sistema de Biblioteca Digital
 
 ## Integrantes
 
