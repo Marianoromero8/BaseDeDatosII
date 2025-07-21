@@ -1,4 +1,4 @@
-# Proyecto 1: Sistema de Biblioteca Digital
+# Proyecto 1: Sistema de Biblioteca Digital con Mongoose
 
 ## Integrantes
 
